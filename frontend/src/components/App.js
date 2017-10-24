@@ -1,19 +1,15 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { initPosts } from '../actions';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {initPosts, initCategories} from '../actions';
 import '../App.css';
 import CategoriesList from './CategoriesList.js';
 import PostsList from './PostsList.js';
 import * as PostsAPI from '../utils/api.js';
 
 class App extends Component {
-  state = {
-    categories: [],
-  }
-
   componentDidMount() {
     PostsAPI.getAllCategories().then((categories) => {
-      this.setState({ categories })
+      this.props._initCategories({categories})
     })
 
     PostsAPI.getAllPosts().then((posts) => {
@@ -22,8 +18,6 @@ class App extends Component {
   }
 
   render() {
-    const { categories } = this.state;
-
     return (
       <div className="App">
         <header className="App-header">
@@ -32,7 +26,7 @@ class App extends Component {
         <p className="App-intro">
           A category-based content and comment app.
         </p>
-        <CategoriesList categories={categories}/>
+        <CategoriesList/>
         <PostsList/>
       </div>
     );
@@ -48,6 +42,7 @@ function mapStateToProps ({ posts }) {
 function mapDispatchToProps (dispatch) {
   return {
     _initPosts: (data) => dispatch(initPosts(data)),
+    _initCategories: (data) => dispatch(initCategories(data)),
   }
 }
 

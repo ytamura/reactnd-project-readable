@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
 class CategoriesList extends Component {
 
@@ -20,4 +21,12 @@ class CategoriesList extends Component {
   }
 }
 
-export default CategoriesList;
+function mapStateToProps ({ categories }) {
+  return {
+    categories: categories,
+  }
+}
+
+export default connect(
+  mapStateToProps,
+)(CategoriesList);
