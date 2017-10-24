@@ -11,20 +11,23 @@ const headers = {
 }
 
 export const getAllCategories = () =>
-  fetch(`${api}/categories`, { headers })
+  fetch(`${api}/categories`, {headers})
     .then(res => res.json())
     .then(data => data.categories)
 
 export const getAllPosts = () =>
-  fetch(`${api}/posts`, { headers })
+  fetch(`${api}/posts`, {headers})
     .then(res => res.json())
 
 export const getPostsInCategory = (category) =>
-  fetch(`${api}/${category}/posts`, { headers })
+  fetch(`${api}/${category}/posts`, {headers})
     .then(res => res.json())
     .then(data => data.posts)
 
-
+export const getCommentsForPost = (post) =>
+  fetch(`${api}/posts/${post.id}/comments`, {headers})
+    .then(res => res.json())
+    .then(data => data)
 
 
 // export const remove = (contact) =>

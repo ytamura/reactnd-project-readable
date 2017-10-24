@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Loading from 'react-loading';
 import sortBy from 'sort-by';
-import {changeCurrCategory} from '../actions';
+import PostDetails from './PostDetails.js'
+import {changeCurrCategory, changeCurrPost, upvotePost, downvotePost} from '../actions';
 
 class PostsList extends Component {
   state = {
@@ -19,8 +20,8 @@ class PostsList extends Component {
   }
 
   render() {
-    const {sortPostsBy} = this.state
-    const {posts, currCategory} = this.props;
+    const {sortPostsBy} = this.state;
+    const {posts, currCategory, currPost, _changeCurrPost, _upvotePost, _downvotePost} = this.props;
     let postsToShow = posts.filter((post) => post.deleted === false &&
                                              (currCategory === '' ||
                                               currCategory === post.category))
@@ -34,14 +35,20 @@ class PostsList extends Component {
           : <div className='posts-list'>
               {postsToShow.map((post) => (
                 <div key={post.id} className="post-list-item">
-                  {post.collapsed
-                  ? <h4>[{post.voteScore}] {post.title}</h4> 
-                  : <div>
-                      <h4>{post.category}</h4>
-                      <h4>[{post.voteScore}] {post.title} by {post.author}</h4>
-                      <p>[{Date(post.timestamp)}] {post.body}</p>
-                    </div>
+                  <div className="button upvote-button"
+                       onClick={() => _upvotePost({post})}>
+                    ▲</div>
+                  <div className="button downvote-button"
+                       onClick={() => _downvotePost({post})}>
+                    ▼</div>
+                  {currPost && post.id === currPost.id
+                    ? <PostDetails/>
+                    : <h4 className="post-title"
+                          onClick={() =>_changeCurrPost({post})}>
+                       [{post.voteScore}] {post.title}</h4>
                   }
+                  <div className="button">more</div>
+                  <div className="button">edit</div>
                 </div>)
               )}
             </div>
@@ -51,16 +58,20 @@ class PostsList extends Component {
   }
 }
 
-function mapStateToProps ({posts, currCategory}) {
+function mapStateToProps ({posts, currCategory, currPost}) {
   return {
     posts: posts,
     currCategory: currCategory,
+    currPost: currPost,
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
     _changeCurrCategory: (data) => dispatch(changeCurrCategory(data)),
+    _changeCurrPost: (data) => dispatch(changeCurrPost(data)),
+    _upvotePost: (data) => dispatch(upvotePost(data)),
+    _downvotePost: (data) => dispatch(downvotePost(data)),
   }
 }
 

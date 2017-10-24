@@ -18,7 +18,7 @@
 }
 
 .category-link {
-  margin: 0 10px 0 10px;
+  margin: 0 0px 0 10px;
   text-decoration: none;
 }
 
@@ -43,4 +43,26 @@
   background-color: #DDD;
   padding: 0 10px 0 10px;
   margin: 10px 0 10px 0;
+}
+
+.post-title {
+  display: inline;
+}
+
+.button {
+  margin: 0 2px 0 2px;
+  display: inline;
+}
+
+.button:hover {
+  cursor: pointer;
+  color: #009900;
+}
+
+.upvote-button {
+  color: #9900FF;
+}
+
+.downvote-button {
+  color: #9900FF;
 }
