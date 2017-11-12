@@ -19,6 +19,10 @@ export const getAllPosts = () =>
   fetch(`${api}/posts`, {headers})
     .then(res => res.json())
 
+export const getPostById = (postid) =>
+  fetch(`${api}/posts/${postid}`, {headers})
+    .then(res => res.json())
+
 export const getPostsInCategory = (category) =>
   fetch(`${api}/${category}/posts`, {headers})
     .then(res => res.json())
@@ -27,7 +31,6 @@ export const getPostsInCategory = (category) =>
 export const getCommentsForPost = (post) =>
   fetch(`${api}/posts/${post.id}/comments`, {headers})
     .then(res => res.json())
-    .then(data => data)
 
 
 // export const remove = (contact) =>

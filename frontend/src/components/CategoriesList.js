@@ -18,7 +18,7 @@ class CategoriesList extends Component {
             ALL
           </Link>
           {categories.map((category) => (
-            <Link to={"/" + category.path}
+            <Link to={"/category/" + category.path}
               key={category.path}
               className={"category-link " +
                          (currCategory === category.path ? "curr-category" : "")}

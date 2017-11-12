@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
-import {Route, Switch} from 'react-router-dom';
+import {Route, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {initPosts, initCategories, changeCurrCategory} from '../actions';
+import {initPosts, initCategories} from '../actions';
 import '../App.css';
 import CategoriesList from './CategoriesList.js';
 import PostsList from './PostsList.js';
+import PostDetails from './PostDetails.js';
+import PostEdit from './PostEdit.js';
 import * as PostsAPI from '../utils/api.js';
 
 class App extends Component {
@@ -31,8 +33,17 @@ class App extends Component {
         <Route exact path="/" render={() => (
           <PostsList newCategory={''}/>
         )}/>
-        <Route path="/:category" render={({match}) => (
+        <Route path="/category/:category" render={({match}) => (
           <PostsList newCategory={match.params.category}/>
+        )}/>
+        <Route path="/post/:postid" render={({match}) => (
+          <PostDetails newPostId={match.params.postid}/>
+        )}/>
+        <Route path="/edit/:postid" render={({match}) => (
+          <PostEdit newPostId={match.params.postid}/>
+        )}/>
+        <Route path="/new_post" render={({match}) => (
+          <PostEdit newPostId=''/>
         )}/>
       </div>
     );
@@ -51,7 +62,7 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(App);
+)(App));

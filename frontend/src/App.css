@@ -34,7 +34,7 @@
   display: inline-block;
 }
 
-.posts-list {
+.posts-list, .post-details {
   text-align: left;
   margin: 0 25% 0 25%;
 }
@@ -45,12 +45,19 @@
   margin: 10px 0 10px 0;
 }
 
+.post-list-item:hover {
+  background-color: #EEE;
+}
+
 .post-title {
   display: inline;
+  cursor: pointer;
 }
 
 .button {
-  margin: 0 2px 0 2px;
+  color: #9900FF;
+  text-decoration: none;
+  margin: 0 5px 0 5px;
   display: inline;
 }
 

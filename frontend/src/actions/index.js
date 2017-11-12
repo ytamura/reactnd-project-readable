@@ -1,8 +1,9 @@
 export const INIT_POSTS = 'INIT_POSTS';
 export const CHANGE_CURR_POST = 'CHANGE_CURR_POST';
+export const TOGGLE_EXPAND_POST = 'TOGGLE_EXPAND_POST';
 export const CREATE_POST = 'CREATE_POST';
+export const UPDATE_POST = 'UPDATE_POST';
 export const DELETE_POST = 'DELETE_POST';
-export const EDIT_POST = 'EDIT_POST';
 export const UPVOTE_POST = 'UPVOTE_POST';
 export const DOWNVOTE_POST = 'DOWNVOTE_POST';
 export const INIT_CATEGORIES = 'INIT_CATEGORIES';
@@ -19,13 +20,27 @@ export function initPosts({posts}) {
 export function changeCurrPost({post}) {
   return {
     type: CHANGE_CURR_POST,
-    post
+    post,
+  }
+}
+
+export function toggleExpandPost({post}) {
+  return {
+    type: TOGGLE_EXPAND_POST,
+    post,
   }
 }
 
 export function createPost({post}) {
   return {
     type: CREATE_POST,
+    post,
+  }
+}
+
+export function updatePost(post) {
+  return {
+    type: UPDATE_POST,
     post,
   }
 }
@@ -44,10 +59,10 @@ export function downvotePost({post}) {
   }
 }
 
-export function deletePost({postId}) {
+export function deletePost({post}) {
   return {
     type: DELETE_POST,
-    postId,
+    post,
   }
 }
 
