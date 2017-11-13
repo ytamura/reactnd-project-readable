@@ -1,3 +1,5 @@
+import * as PostsAPI from '../utils/api.js';
+
 export const INIT_POSTS = 'INIT_POSTS';
 export const CHANGE_CURR_POST = 'CHANGE_CURR_POST';
 export const TOGGLE_EXPAND_POST = 'TOGGLE_EXPAND_POST';
@@ -19,12 +21,16 @@ export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const UPVOTE_COMMENT = 'UPVOTE_COMMENT';
 export const DOWNVOTE_COMMENT = 'DOWNVOTE_COMMENT';
 
-export function initPosts({posts}) {
-  return {
-    type: INIT_POSTS,
-    posts,
-  }
-}
+export const _initPosts = (posts) => ({
+  type: INIT_POSTS,
+  posts,
+});
+
+export const initPosts = (posts) => dispatch => (
+  PostsAPI
+    .getAllPosts()
+    .then((posts) => dispatch(_initPosts(posts)))
+);
 
 export function changeCurrPost({post}) {
   return {
@@ -47,12 +53,16 @@ export function toggleExpandAll({expand}) {
   }
 }
 
-export function createPost(post) {
-  return {
-    type: CREATE_POST,
-    post,
-  }
-}
+export const _createPost = (post) => ({
+  type: CREATE_POST,
+  post,
+});
+
+export const createPost = (post) => dispatch => (
+  PostsAPI
+    .createPost(post)
+    .then(() => dispatch(_createPost(post)))
+);
 
 export function updatePost(post) {
   return {
@@ -82,12 +92,16 @@ export function deletePost({post}) {
   }
 }
 
-export function initCategories({categories}) {
-  return {
-    type: INIT_CATEGORIES,
-    categories,
-  }
-}
+export const _initCategories = (categories) => ({
+  type: INIT_CATEGORIES,
+  categories,
+});
+
+export const initCategories = (categories) => dispatch => (
+  PostsAPI
+    .getAllCategories()
+    .then((categories) => dispatch(_initCategories(categories)))
+);
 
 export function changeCurrCategory(newCategory) {
   return {

@@ -11,13 +11,8 @@ import * as PostsAPI from '../utils/api.js';
 
 class App extends Component {
   componentDidMount() {
-    PostsAPI.getAllCategories().then((categories) => {
-      this.props._initCategories({categories});
-    })
-
-    PostsAPI.getAllPosts().then((posts) => {
-      this.props._initPosts({posts});
-    })
+    this.props._initCategories();
+    this.props._initPosts();
   }
 
   render() {

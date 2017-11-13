@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import uuid from 'uuid';
-import {Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import {toggleEditComment, upvoteComment, downvoteComment, deleteComment,
         createComment, updateComment} from '../actions';
 

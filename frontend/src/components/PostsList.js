@@ -46,7 +46,7 @@ class PostsList extends Component {
 
   render() {
     const {sortPostsBy} = this.state;
-    const {posts, currCategory, _toggleExpandAll} = this.props;
+    const {posts, currCategory} = this.props;
     let postsToShow = posts.filter((post) => post.deleted === false &&
                                              (currCategory === '' ||
                                               currCategory === post.category))
