@@ -66,8 +66,6 @@ class PostEdit extends Component {
     newPost.timestamp = Date.now();
     newPost.id = submitId;
     if (newPostId === '') {
-      newPost.voteScore = 1;
-      console.log('newPost', newPost);
       _createPost(newPost);
     } else {
       _updatePost(newPost);

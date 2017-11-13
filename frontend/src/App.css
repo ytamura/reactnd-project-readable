@@ -66,10 +66,6 @@
   color: #009900;
 }
 
-.upvote-button {
-  color: #9900FF;
-}
-
-.downvote-button {
-  color: #9900FF;
+.comment-button {
+  color: #FF5500;
 }

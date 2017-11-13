@@ -10,10 +10,10 @@ class PostHeader extends Component {
 
     return (
       <div>
-        <div className="button upvote-button"
+        <div className="button"
              onClick={() => _upvotePost({post})}>
           ▲</div>
-        <div className="button downvote-button"
+        <div className="button"
              onClick={() => _downvotePost({post})}>
           ▼</div>
         <h4 className="post-title"

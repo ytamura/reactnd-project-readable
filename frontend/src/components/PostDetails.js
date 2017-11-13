@@ -4,9 +4,11 @@ import {getCommentsForPost} from '../utils/api.js';
 import {initPosts, initComments, changeCurrCategory, changeCurrPost} from '../actions';
 import {Link, withRouter} from 'react-router-dom';
 import PostHeader from './PostHeader.js';
+import Comment from './Comment.js';
 import * as PostsAPI from '../utils/api.js';
 
 class PostDetails extends Component {
+
   componentDidMount() {
     const {newPostId, currPost, _changeCurrPost, _initComments} = this.props;
 
@@ -17,13 +19,18 @@ class PostDetails extends Component {
       PostsAPI.getPostById(newPostId).then((post) => {
         console.log('gotpost', post);
         _changeCurrPost({post});
+
+        getCommentsForPost(post).then((comments) => {
+          console.log('comments', comments);
+          _initComments({comments});
+        });
+      });
+    } else {
+      getCommentsForPost(currPost).then((comments) => {
+        console.log('comments', comments);
+        _initComments({comments});
       });
     }
-
-    getCommentsForPost(currPost).then((comments) => {
-      console.log('comments', comments);
-      _initComments({comments});
-    });
   }
 
   render() {
@@ -44,12 +51,12 @@ class PostDetails extends Component {
                         className="category-link"
                         onClick={() => _changeCurrCategory(currPost.category)}>
                     {currPost.category}
-                  </Link>, Comments ({comments.length}):
+                  </Link>
+                , Comments ({comments.length})
+                <div className="button comment-button">add new</div>:
                 </div>
                 {comments.map((comment) =>
-                  <div key={comment.id}>
-                    -- <strong>{comment.author}</strong> {comment.body}
-                  </div>
+                  <Comment key={comment.id} comment={comment}/>
                 )}
               </div>
             }

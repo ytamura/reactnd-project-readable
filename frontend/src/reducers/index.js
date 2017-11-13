@@ -12,6 +12,12 @@ import {
   UPVOTE_POST,
   DOWNVOTE_POST,
   INIT_COMMENTS,
+  TOGGLE_EDIT_COMMENT,
+  CREATE_COMMENT,
+  UPDATE_COMMENT,
+  DELETE_COMMENT,
+  UPVOTE_COMMENT,
+  DOWNVOTE_COMMENT,
 } from '../actions';
 
 function posts(state = [], action) {
@@ -37,6 +43,7 @@ function posts(state = [], action) {
       return [
         ...state,
         {...action.post,
+          voteScore: 1,
           collapsed: true,
           deleted: false,
         }
@@ -136,7 +143,67 @@ function currCategory(state = '', action) {
 function comments(state = [], action) {
   switch (action.type) {
     case INIT_COMMENTS:
-      return action.comments;
+      return action.comments.map((comment) => {
+        return {
+          ...comment,
+          edit: false,
+        };
+      });
+    case TOGGLE_EDIT_COMMENT:
+      return state.map((comment) => {
+        if(comment.id === action.comment.id) {
+          return {
+            ...comment,
+            edit: !action.comment.edit
+          };
+        }
+        return comment;
+      });
+    case CREATE_COMMENT:
+      return [
+        ...state,
+        {...action.comment,
+          voteScore: 1,
+          edit: false,
+        }
+      ]
+    case UPDATE_COMMENT:
+      return state.map((comment) => {
+        if (comment.id === action.comment.id) {
+          return action.comment;
+        }
+        return comment;
+      });
+    case DELETE_COMMENT:
+      return state.map((comment) => {
+        if (comment.id === action.comment.id) {
+          return {
+            ...comment,
+            deleted: true
+          };
+        }
+        return comment;
+      })
+    case UPVOTE_COMMENT:
+      return state.map((comment) => {
+        if (comment.id === action.comment.id) {
+          return {
+            ...comment,
+            voteScore: comment.voteScore + 1
+          };
+        }
+        return comment;
+      });
+    case DOWNVOTE_COMMENT:
+      return state.map((comment) => {
+        if(comment.id === action.comment.id) {
+          return {
+            ...comment,
+            voteScore: comment.voteScore - 1
+          };
+        }
+        return comment;
+      });
     default:
       return state;
   }
