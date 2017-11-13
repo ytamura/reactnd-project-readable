@@ -63,7 +63,7 @@ class PostsList extends Component {
                 <div key={post.id} className="post-list-item">
                   <PostHeader post={post}/>
                   {!post.collapsed
-                   ? <p>[{(new Date(post.timestamp)).toLocaleString()}] {post.body}</p>
+                   ? <span>[{(new Date(post.timestamp)).toLocaleString()}] {post.body}</span>
                    : ""}
                 </div>)
               )}

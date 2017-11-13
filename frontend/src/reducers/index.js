@@ -165,6 +165,7 @@ function comments(state = [], action) {
         {...action.comment,
           voteScore: 1,
           edit: false,
+          deleted: false,
         }
       ]
     case UPDATE_COMMENT:

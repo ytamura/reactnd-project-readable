@@ -52,12 +52,12 @@ class PostDetails extends Component {
                         onClick={() => _changeCurrCategory(currPost.category)}>
                     {currPost.category}
                   </Link>
-                , Comments ({comments.length})
-                <div className="button comment-button">add new</div>:
+                , Comments ({comments.length}):
                 </div>
                 {comments.map((comment) =>
                   <Comment key={comment.id} comment={comment}/>
                 )}
+                <Comment comment={undefined}/>
               </div>
             }
            </div>

@@ -11,11 +11,19 @@ class PostHeader extends Component {
     return (
       <div>
         <div className="button"
+             title="upvote"
              onClick={() => _upvotePost({post})}>
           ▲</div>
         <div className="button"
+             title="downvote"
              onClick={() => _downvotePost({post})}>
           ▼</div>
+        <Link to={"/edit/" + post.id}
+              className="button"
+              title="edit post"
+              onClick={() => _changeCurrPost({post})}>
+          ✎
+        </Link>
         <h4 className="post-title"
             onClick={() => _toggleExpandPost({post})}>
           [{post.voteScore}][{post.author}] {post.title}</h4>
@@ -24,12 +32,8 @@ class PostHeader extends Component {
               onClick={() => _changeCurrPost({post})}>
           comments
         </Link>
-        <Link to={"/edit/" + post.id}
-              className="button"
-              onClick={() => _changeCurrPost({post})}>
-          ✎
-        </Link>
-        <div className="button"
+        <div className="button float-right"
+             title="delete post"
              onClick={() => _deletePost({post})}>
           x
         </div>

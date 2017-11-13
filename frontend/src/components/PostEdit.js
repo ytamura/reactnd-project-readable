@@ -33,24 +33,24 @@ class PostEdit extends Component {
       this.updateAuthor(currPost.author);
       this.updateTitle(currPost.title);
       this.updateBody(currPost.body);
-      this.updateCategory(currPost.category)
+      this.updateCategory(currPost.category);
     }
   }
 
   updateAuthor = (input) => {
-    this.setState({postAuthor: input})
+    this.setState({postAuthor: input});
   }
 
   updateTitle = (input) => {
-    this.setState({postTitle: input})
+    this.setState({postTitle: input});
   }
 
   updateBody = (input) => {
-    this.setState({postBody: input})
+    this.setState({postBody: input});
   }
 
   updateCategory = (input) => {
-    this.setState({postCategory: input})
+    this.setState({postCategory: input});
   }
 
   submitPost = (submitId) => {
@@ -64,10 +64,10 @@ class PostEdit extends Component {
     newPost.body = postBody.trim();
     newPost.category = postCategory;
     newPost.timestamp = Date.now();
-    newPost.id = submitId;
     if (newPostId === '') {
       _createPost(newPost);
     } else {
+      newPost.id = submitId;
       _updatePost(newPost);
     }
   }
