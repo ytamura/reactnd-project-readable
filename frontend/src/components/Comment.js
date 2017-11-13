@@ -86,8 +86,7 @@ class Comment extends Component {
                 <div className="button comment-button"
                      title="edit comment"
                      onClick={() => _toggleEditComment({comment})}>
-                  ✎
-                </div>
+                  ✎</div>
                 <div className="button comment-button float-right"
                      title="delete comment"
                      onClick={() => _deleteComment({comment})}>

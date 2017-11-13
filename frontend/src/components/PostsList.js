@@ -4,7 +4,7 @@ import {Link, withRouter} from 'react-router-dom';
 import Loading from 'react-loading';
 import sortBy from 'sort-by';
 import PostHeader from './PostHeader.js';
-import {changeCurrCategory} from '../actions';
+import {changeCurrCategory, toggleExpandAll} from '../actions';
 
 class PostsList extends Component {
   state = {
@@ -36,9 +36,17 @@ class PostsList extends Component {
     this.setState({sortPostsBy: newOrder});
   }
 
+  expandAll = () => {
+    this.props._toggleExpandAll({expand: true});
+  }
+
+  collapseAll = () => {
+    this.props._toggleExpandAll({expand: false});
+  }
+
   render() {
     const {sortPostsBy} = this.state;
-    const {posts, currCategory} = this.props;
+    const {posts, currCategory, _toggleExpandAll} = this.props;
     let postsToShow = posts.filter((post) => post.deleted === false &&
                                              (currCategory === '' ||
                                               currCategory === post.category))
@@ -48,8 +56,11 @@ class PostsList extends Component {
       <div>
         <h2>Posts ({postsToShow.length})</h2>
         <div>
-          <Link to="/new_post" className="button">
-            new</Link>
+          <Link to="/new_post" className="button">Add new</Link>|
+          <div className="button"
+               onClick={() => this.expandAll()}>Expand all</div>|
+          <div className="button"
+               onClick={() => this.collapseAll()}>Collapse all</div>|
           Sort by:
           <div className="button"
                onClick={() => this.updateSortby("voteScore")}>votes</div>
@@ -77,13 +88,14 @@ class PostsList extends Component {
 function mapStateToProps ({posts, currCategory}) {
   return {
     posts: posts,
-    currCategory: currCategory
+    currCategory: currCategory,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     _changeCurrCategory: (data) => dispatch(changeCurrCategory(data)),
+    _toggleExpandAll: (data) => dispatch(toggleExpandAll(data)),
   }
 }
 

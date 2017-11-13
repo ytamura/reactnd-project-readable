@@ -1,6 +1,7 @@
 export const INIT_POSTS = 'INIT_POSTS';
 export const CHANGE_CURR_POST = 'CHANGE_CURR_POST';
 export const TOGGLE_EXPAND_POST = 'TOGGLE_EXPAND_POST';
+export const TOGGLE_EXPAND_ALL = 'TOGGLE_EXPAND_ALL';
 export const CREATE_POST = 'CREATE_POST';
 export const UPDATE_POST = 'UPDATE_POST';
 export const DELETE_POST = 'DELETE_POST';
@@ -36,6 +37,13 @@ export function toggleExpandPost({post}) {
   return {
     type: TOGGLE_EXPAND_POST,
     post,
+  }
+}
+
+export function toggleExpandAll({expand}) {
+  return {
+    type: TOGGLE_EXPAND_ALL,
+    expand,
   }
 }
 

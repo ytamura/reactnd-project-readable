@@ -4,6 +4,7 @@ import {
   INIT_POSTS,
   CHANGE_CURR_POST,
   TOGGLE_EXPAND_POST,
+  TOGGLE_EXPAND_ALL,
   INIT_CATEGORIES,
   CHANGE_CURR_CATEGORY,
   CREATE_POST,
@@ -27,7 +28,7 @@ function posts(state = [], action) {
         return {
           ...post,
           collapsed: true,
-        }
+        };
       });
     case TOGGLE_EXPAND_POST:
       return state.map((post) => {
@@ -38,6 +39,13 @@ function posts(state = [], action) {
           };
         }
         return post;
+      });
+    case TOGGLE_EXPAND_ALL:
+      return state.map((post) => {
+        return {
+          ...post,
+          collapsed: !action.expand
+        };
       });
     case CREATE_POST:
       return [

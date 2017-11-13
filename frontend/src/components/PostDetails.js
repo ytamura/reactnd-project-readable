@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {getCommentsForPost} from '../utils/api.js';
 import {initPosts, initComments, changeCurrCategory, changeCurrPost} from '../actions';
 import {Link, withRouter} from 'react-router-dom';
+import sortBy from 'sort-by';
 import PostHeader from './PostHeader.js';
 import Comment from './Comment.js';
 import * as PostsAPI from '../utils/api.js';
@@ -35,6 +36,8 @@ class PostDetails extends Component {
 
   render() {
     const {currPost, comments, _changeCurrCategory} = this.props;
+    let commentsToShow = comments.map((comment) => comment);
+    commentsToShow.sort(sortBy('-voteScore'));
 
     return (
       <div className="posts-list">
@@ -42,19 +45,19 @@ class PostDetails extends Component {
          ? "loading..."
          : <div className="post-list-item">
             <PostHeader post={currPost}/>
-            <p>[{(new Date(currPost.timestamp)).toLocaleString()}] {currPost.body}</p>
             {currPost.deleted 
-             ? "DELETED"
+             ? <p>THIS POST WAS DELETED FOREVER</p>
              : <div>
+                <p>[{(new Date(currPost.timestamp)).toLocaleString()}] {currPost.body}</p>
                 <div>Category:
                   <Link to={"/category/" + currPost.category}
                         className="category-link"
                         onClick={() => _changeCurrCategory(currPost.category)}>
                     {currPost.category}
                   </Link>
-                , Comments ({comments.length}):
+                , Comments ({commentsToShow.length}):
                 </div>
-                {comments.map((comment) =>
+                {commentsToShow.map((comment) =>
                   <Comment key={comment.id} comment={comment}/>
                 )}
                 <Comment comment={undefined}/>
