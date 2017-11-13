@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import uuid from 'uuid';
 import {getCommentsForPost} from '../utils/api.js';
 import {initComments, changeCurrPost,
         updatePost, createPost} from '../actions';
@@ -12,7 +13,7 @@ class PostEdit extends Component {
     postAuthor: '',
     postBody: '',
     postTitle: '',
-    postCategory: '',
+    postCategory: 'react',
   }
 
   componentDidMount() {
@@ -37,34 +38,36 @@ class PostEdit extends Component {
   }
 
   updateAuthor = (input) => {
-    this.setState({postAuthor: input.trim()})
+    this.setState({postAuthor: input})
   }
 
   updateTitle = (input) => {
-    this.setState({postTitle: input.trim()})
+    this.setState({postTitle: input})
   }
 
   updateBody = (input) => {
-    this.setState({postBody: input.trim()})
+    this.setState({postBody: input})
   }
 
   updateCategory = (input) => {
-    this.setState({postCategory: input.trim()})
+    this.setState({postCategory: input})
   }
 
-  submitPost = () => {
+  submitPost = (submitId) => {
     const {postAuthor, postTitle, postBody, postCategory} = this.state;
-    const {newPostId, currPost, _createPost, _updatePost} = this.props;
+    const {newPostId, currPost, _createPost, _updatePost,
+           _changeCurrPost} = this.props;
 
     let newPost = ((newPostId === '') ? {} : Object.assign({}, currPost));
-    newPost.author = postAuthor;
-    newPost.title = postTitle;
-    newPost.body = postBody;
+    newPost.author = postAuthor.trim();
+    newPost.title = postTitle.trim();
+    newPost.body = postBody.trim();
     newPost.category = postCategory;
     newPost.timestamp = Date.now();
-    console.log('newPost', newPost);
+    newPost.id = submitId;
     if (newPostId === '') {
       newPost.voteScore = 1;
+      console.log('newPost', newPost);
       _createPost(newPost);
     } else {
       _updatePost(newPost);
@@ -73,16 +76,26 @@ class PostEdit extends Component {
 
   render() {
     const {postAuthor, postTitle, postBody, postCategory} = this.state;
-    const {currPost, comments, categories} = this.props;
+    const {newPostId, currPost, comments, categories} = this.props;
     console.log('test', currPost)
+
+    let submitId = uuid.v1();
+    if (newPostId !== '') {
+      submitId = currPost.id;
+    }
 
     return (
       <div className="posts-list">
         {currPost === undefined
          ? "loading..."
          : <div className="post-list-item">
-            <PostHeader post={currPost}/>
-            <p>[{Date(currPost.timestamp)}] {currPost.body}</p>
+            {newPostId === ''
+             ? <h4>Create a New Post</h4>
+             : <div>
+                <PostHeader post={currPost}/>
+                <p>[{(new Date(currPost.timestamp)).toLocaleString()}] {currPost.body}</p>
+               </div>
+             }
             <div className="post-edit-form">
               <label>Category: </label>
               <select 
@@ -120,9 +133,13 @@ class PostEdit extends Component {
                 onChange={(event) => this.updateBody(event.target.value)}
               />
               <br/>
-              <Link to={"/post/" + currPost.id}
+              <div className="button"
+                   onClick={() => this.submitPost(submitId)}>
+                Submit Test
+              </div>
+              <Link to={"/post/" + submitId}
                     className="button"
-                    onClick={() => this.submitPost()}>
+                    onClick={() => this.submitPost(submitId)}>
                 Submit
               </Link>
             </div>

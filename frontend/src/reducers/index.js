@@ -21,7 +21,6 @@ function posts(state = [], action) {
         return {
           ...post,
           collapsed: true,
-          edit: false,
         }
       });
     case TOGGLE_EXPAND_POST:
@@ -37,7 +36,10 @@ function posts(state = [], action) {
     case CREATE_POST:
       return [
         ...state,
-        action.post
+        {...action.post,
+          collapsed: true,
+          deleted: false,
+        }
       ]
     case UPDATE_POST:
       return state.map((post) => {
@@ -85,6 +87,12 @@ function currPost(state = {}, action) {
   switch (action.type) {
     case CHANGE_CURR_POST:
       return action.post;
+    case CREATE_POST:
+      return {
+        ...action.post,
+        deleted: false,
+        collapsed: true,
+      };
     case UPDATE_POST:
       return action.post
     case UPVOTE_POST:

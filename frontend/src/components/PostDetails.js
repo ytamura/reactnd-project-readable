@@ -35,7 +35,7 @@ class PostDetails extends Component {
          ? "loading..."
          : <div className="post-list-item">
             <PostHeader post={currPost}/>
-            <p>[{Date(currPost.timestamp)}] {currPost.body}</p>
+            <p>[{(new Date(currPost.timestamp)).toLocaleString()}] {currPost.body}</p>
             {currPost.deleted 
              ? "DELETED"
              : <div>

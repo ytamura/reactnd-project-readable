@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 import Loading from 'react-loading';
 import sortBy from 'sort-by';
 import PostHeader from './PostHeader.js';
@@ -48,6 +48,8 @@ class PostsList extends Component {
       <div>
         <h2>Posts ({postsToShow.length})</h2>
         <div>
+          <Link to="/new_post" className="button">
+            new</Link>
           Sort by:
           <div className="button"
                onClick={() => this.updateSortby("voteScore")}>votes</div>

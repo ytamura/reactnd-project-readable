@@ -27,11 +27,11 @@ class PostHeader extends Component {
         <Link to={"/edit/" + post.id}
               className="button"
               onClick={() => _changeCurrPost({post})}>
-          edit
+          ✎
         </Link>
         <div className="button"
              onClick={() => _deletePost({post})}>
-          delete
+          x
         </div>
       </div>
     )
