@@ -37,14 +37,14 @@ class Comment extends Component {
 
   submitComment = () => {
     const {newComment, newAuthor} = this.state;
-    const {comment, _createComment, _updateComment,
-           _toggleEditComment} = this.props;
-
     if (newComment.trim().length === 0 ||
         newAuthor.trim().length === 0) {
       this.setState({error: 'error: comment/author cannot be blank'});
       return;
     }
+
+    const {comment, _createComment, _updateComment,
+           _toggleEditComment} = this.props;
 
     let newCommentObj = ((comment === undefined) ? {} : Object.assign({}, comment));
     newCommentObj.timestamp = new Date();

@@ -105,6 +105,7 @@ function currPost(state = {}, action) {
     case CREATE_POST:
       return {
         ...action.post,
+        voteScore: 1,
         deleted: false,
         collapsed: true,
       };

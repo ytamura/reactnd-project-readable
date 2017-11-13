@@ -14,6 +14,7 @@ class PostEdit extends Component {
     postBody: '',
     postTitle: '',
     postCategory: 'react',
+    error: '',
   }
 
   componentDidMount() {
@@ -55,8 +56,15 @@ class PostEdit extends Component {
 
   submitPost = (submitId) => {
     const {postAuthor, postTitle, postBody, postCategory} = this.state;
+    console.log('state',this.state)
+    if (postAuthor.trim().length === 0 || postTitle.trim().length === 0 ||
+        postBody.trim().length === 0 || postCategory.trim().length === 0) {
+      this.setState({error: 'error: all fields required'});
+      return;
+    }
+
     const {newPostId, currPost, _createPost, _updatePost,
-           _changeCurrPost} = this.props;
+           _changeCurrPost, history} = this.props;
 
     let newPost = ((newPostId === '') ? {} : Object.assign({}, currPost));
     newPost.author = postAuthor.trim();
@@ -65,15 +73,17 @@ class PostEdit extends Component {
     newPost.category = postCategory;
     newPost.timestamp = Date.now();
     if (newPostId === '') {
+      newPost.id = submitId;
       _createPost(newPost);
     } else {
-      newPost.id = submitId;
       _updatePost(newPost);
     }
+
+    history.push('/post/' + submitId);
   }
 
   render() {
-    const {postAuthor, postTitle, postBody, postCategory} = this.state;
+    const {postAuthor, postTitle, postBody, postCategory, error} = this.state;
     const {newPostId, currPost, comments, categories} = this.props;
     console.log('test', currPost)
 
@@ -94,53 +104,70 @@ class PostEdit extends Component {
                 <p>[{(new Date(currPost.timestamp)).toLocaleString()}] {currPost.body}</p>
                </div>
              }
-            <div className="post-edit-form">
-              <label>Category: </label>
-              <select 
-                value={postCategory}
-                onChange={(event) => this.updateCategory(event.target.value)}>
-                {categories.map((category) => (
-                    <option key={category.name}
-                            value={category.name}>{category.name}
-                    </option>
-                  )
-                )}
-              </select>
-              <br/>
-              <label>Author: </label>
-              <input
-                type="text"
-                value={postAuthor}
-                placeholder="Post author"
-                onChange={(event) => this.updateAuthor(event.target.value)}
-              />
-              <br/>
-              <label>Title: </label>
-              <input
-                type="text"
-                value={postTitle}
-                placeholder="Post title"
-                onChange={(event) => this.updateTitle(event.target.value)}
-              />
-              <br/>
-              <label>Content: </label>
-              <input
-                type="text"
-                value={postBody}
-                placeholder="Post body"
-                onChange={(event) => this.updateBody(event.target.value)}
-              />
-              <br/>
-              <div className="button"
-                   onClick={() => this.submitPost(submitId)}>
-                Submit Test
-              </div>
-              <Link to={"/post/" + submitId}
-                    className="button"
+            <table className="post-edit-form">
+              <tbody>
+                <tr>
+                  <td className="post-edit-form-label">Category:</td>
+                  <td>
+                  <select
+                    value={postCategory}
+                    onChange={(event) => this.updateCategory(event.target.value)}>
+                    {categories.map((category) => (
+                        <option key={category.name}
+                                value={category.name}>{category.name}</option>
+                      )
+                    )}</select>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="post-edit-form-label">Author:</td>
+                  <td>
+                  <input
+                    type="text"
+                    value={postAuthor}
+                    placeholder="Post author"
+                    maxLength="30"
+                    onChange={(event) => this.updateAuthor(event.target.value)}
+                  />
+                  </td>
+                </tr>
+                <tr>
+                  <td className="post-edit-form-label">Title:</td>
+                  <td>
+                  <input
+                    type="text"
+                    value={postTitle}
+                    placeholder="Post title"
+                    maxLength="70"
+                    onChange={(event) => this.updateTitle(event.target.value)}
+                  />
+                  </td>
+                </tr>
+                <tr>
+                  <td className="post-edit-form-label">Content:</td>
+                  <td>
+                  <input
+                    type="text"
+                    value={postBody}
+                    className="long-text-input"
+                    placeholder="Post body"
+                    maxLength="500"
+                    onChange={(event) => this.updateBody(event.target.value)}
+                  />
+                  </td>
+                </tr>
+                <tr>
+                  <td className="post-edit-form-label">
+                  <div
+                    className="button submit-button"
                     onClick={() => this.submitPost(submitId)}>
-                Submit
-              </Link>
-            </div>
+                    save
+                  </div>
+                  </td>
+                  <td><div className="error">{error}</div></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         }
       </div>
