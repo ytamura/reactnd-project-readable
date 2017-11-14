@@ -54,13 +54,12 @@ class Comment extends Component {
       newCommentObj.id = uuid.v1();
       newCommentObj.parentId = currPost.id;
       _createComment(newCommentObj);
+      this.updateComment('');
+      this.updateAuthor('');
     } else {
       _updateComment(newCommentObj)
         .then(() => _toggleEditComment(comment));
     }
-
-    this.updateComment('');
-    this.updateAuthor('');
   }
 
   render() {
@@ -78,22 +77,18 @@ class Comment extends Component {
                 --&nbsp;
                 <div className="button comment-button"
                      title="upvote"
-                     onClick={() => _upvoteComment({comment})}>
-                  ▲</div>
+                     onClick={() => _upvoteComment(comment)}>▲</div>
                 <div className="button comment-button"
                      title="downvote"
-                     onClick={() => _downvoteComment({comment})}>
-                  ▼</div>
+                     onClick={() => _downvoteComment(comment)}>▼</div>
+                <strong title="votes">[{comment.voteScore}]</strong>
                 <div className="button comment-button"
                      title="edit comment"
-                     onClick={() => _toggleEditComment(comment)}>
-                  ✎</div>
+                     onClick={() => _toggleEditComment(comment)}>✎</div>
                 <div className="button comment-button float-right"
                      title="delete comment"
-                     onClick={() => _deleteComment({comment})}>
-                  x
-                </div>
-                <strong>[{comment.voteScore}] {comment.author}</strong>
+                     onClick={() => _deleteComment(comment)}>x</div>
+                <strong>{comment.author}</strong>
               </span>
         }
         {(comment === undefined || comment.edit)
@@ -106,7 +101,7 @@ class Comment extends Component {
               onChange={(event) => this.updateAuthor(event.target.value)}
               disabled={comment !== undefined}
             />
-            <label> Comment: </label>
+            <label>Comment: </label>
             <input
               type="text"
               className="long-text-input"
@@ -119,8 +114,13 @@ class Comment extends Component {
             <div className="error">{error}</div>
            </div>
          : <span>
-            &nbsp;[{(new Date(comment.timestamp)).toLocaleString()}]
-            &nbsp;{comment.body}
+            {comment.deleted
+              ? ''
+              : <span>
+                  &nbsp;[{(new Date(comment.timestamp)).toLocaleString()}]
+                  &nbsp;{comment.body}
+                </span>
+             }
            </span>
         }
       </div>

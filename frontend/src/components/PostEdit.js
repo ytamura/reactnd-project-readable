@@ -39,14 +39,26 @@ class PostEdit extends Component {
   }
 
   updateAuthor = (input) => {
+    if (input.length > 0) {
+      //clear error
+      this.setState({error: ''});
+    }
     this.setState({postAuthor: input});
   }
 
   updateTitle = (input) => {
+    if (input.length > 0) {
+      //clear error
+      this.setState({error: ''});
+    }
     this.setState({postTitle: input});
   }
 
   updateBody = (input) => {
+    if (input.length > 0) {
+      //clear error
+      this.setState({error: ''});
+    }
     this.setState({postBody: input});
   }
 

@@ -163,26 +163,38 @@ export const updateComment = (comment) => dispatch => (
     .then(() => dispatch(_updateComment(comment)))
 );
 
-export function upvoteComment({comment}) {
-  return {
-    type: UPVOTE_COMMENT,
-    comment,
-  }
-}
+export const _upvoteComment = (comment) => ({
+  type: UPVOTE_COMMENT,
+  comment,
+});
 
-export function downvoteComment({comment}) {
-  return {
-    type: DOWNVOTE_COMMENT,
-    comment,
-  }
-}
+export const upvoteComment = (comment) => dispatch => (
+  PostsAPI
+    .voteComment(comment, {option: "upVote"})
+    .then(() => dispatch(_upvoteComment(comment)))
+);
 
-export function deleteComment({comment}) {
-  return {
-    type: DELETE_COMMENT,
-    comment,
-  }
-}
+export const _downvoteComment = (comment) => ({
+  type: DOWNVOTE_COMMENT,
+  comment,
+});
+
+export const downvoteComment = (comment) => dispatch => (
+  PostsAPI
+    .voteComment(comment, {option: "downVote"})
+    .then(() => dispatch(_downvoteComment(comment)))
+);
+
+export const _deleteComment = (comment) => ({
+  type: DELETE_COMMENT,
+  comment,
+});
+
+export const deleteComment = (comment) => dispatch => (
+  PostsAPI
+    .deleteComment(comment)
+    .then(() => dispatch(_deleteComment(comment)))
+);
 
 //UI only
 export function toggleEditComment(comment) {

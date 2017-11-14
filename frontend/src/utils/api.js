@@ -88,17 +88,18 @@ export const updateComment = (comment) =>
     body: JSON.stringify(comment)
   }).then(res => res.json())
 
-// export const remove = (contact) =>
-//   fetch(`${api}/contacts/${contact.id}`, { method: 'DELETE', headers })
-//     .then(res => res.json())
-//     .then(data => data.contact)
+export const voteComment = (comment, vote) =>
+  fetch(`${api}/comments/${comment.id}`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(vote)
+  }).then(res => res.json())
 
-// export const create = (body) =>
-//   fetch(`${api}/contacts`, {
-//     method: 'POST',
-//     headers: {
-//       ...headers,
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify(body)
-//   }).then(res => res.json())
+export const deleteComment = (comment) =>
+  fetch(`${api}/comments/${comment.id}`, {
+    method: 'DELETE',
+    headers
+  }).then(res => res.json())

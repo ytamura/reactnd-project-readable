@@ -189,7 +189,8 @@ function comments(state = [], action) {
         if (comment.id === action.comment.id) {
           return {
             ...comment,
-            deleted: true
+            deleted: true,
+            edit: false,
           };
         }
         return comment;
