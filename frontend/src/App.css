@@ -64,6 +64,7 @@
   text-decoration: none;
   margin: 0 5px 0 5px;
   display: inline;
+  user-select: none;
 }
 
 .button:hover {

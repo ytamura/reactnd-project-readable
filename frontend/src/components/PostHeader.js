@@ -15,11 +15,11 @@ class PostHeader extends Component {
          : <span> 
             <div className="button"
                  title="upvote"
-                 onClick={() => _upvotePost({post})}>
+                 onClick={() => _upvotePost(post)}>
               ▲</div>
             <div className="button"
                  title="downvote"
-                 onClick={() => _downvotePost({post})}>
+                 onClick={() => _downvotePost(post)}>
               ▼</div>
             <Link to={"/edit/" + post.id}
                   className="button"
@@ -40,7 +40,7 @@ class PostHeader extends Component {
             </Link>
             <div className="button float-right"
                  title="delete post"
-                 onClick={() => _deletePost({post})}>
+                 onClick={() => _deletePost(post)}>
               x
             </div>
            </span>

@@ -42,6 +42,52 @@ export const createPost = (post) =>
     body: JSON.stringify(post)
   }).then(res => res.json())
 
+export const updatePost = (post) =>
+  fetch(`${api}/posts/${post.id}`, {
+    method: 'PUT',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(post)
+  }).then(res => res.json())
+
+export const votePost = (post, vote) =>
+  fetch(`${api}/posts/${post.id}`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(vote)
+  }).then(res => res.json())
+
+export const deletePost = (post) =>
+  fetch(`${api}/posts/${post.id}`, {
+    method: 'DELETE',
+    headers
+  }).then(res => res.json())
+
+export const createComment = (comment) =>
+  fetch(`${api}/comments`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(comment)
+  }).then(res => res.json())
+
+export const updateComment = (comment) =>
+  fetch(`${api}/comments/${comment.id}`, {
+    method: 'PUT',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(comment)
+  }).then(res => res.json())
+
 // export const remove = (contact) =>
 //   fetch(`${api}/contacts/${contact.id}`, { method: 'DELETE', headers })
 //     .then(res => res.json())

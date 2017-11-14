@@ -43,7 +43,7 @@ class Comment extends Component {
       return;
     }
 
-    const {comment, _createComment, _updateComment,
+    const {currPost, comment, _createComment, _updateComment,
            _toggleEditComment} = this.props;
 
     let newCommentObj = ((comment === undefined) ? {} : Object.assign({}, comment));
@@ -52,10 +52,11 @@ class Comment extends Component {
     if (comment === undefined) {
       newCommentObj.author = newAuthor;
       newCommentObj.id = uuid.v1();
+      newCommentObj.parentId = currPost.id;
       _createComment(newCommentObj);
     } else {
-      _updateComment(newCommentObj);
-      _toggleEditComment({comment});
+      _updateComment(newCommentObj)
+        .then(() => _toggleEditComment(comment));
     }
 
     this.updateComment('');
@@ -85,7 +86,7 @@ class Comment extends Component {
                   ▼</div>
                 <div className="button comment-button"
                      title="edit comment"
-                     onClick={() => _toggleEditComment({comment})}>
+                     onClick={() => _toggleEditComment(comment)}>
                   ✎</div>
                 <div className="button comment-button float-right"
                      title="delete comment"
@@ -127,9 +128,9 @@ class Comment extends Component {
   }
 }
 
-function mapStateToProps({posts}) {
+function mapStateToProps({currPost}) {
   return {
-
+    currPost: currPost,
   }
 }
 

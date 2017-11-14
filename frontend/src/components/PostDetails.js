@@ -18,19 +18,11 @@ class PostDetails extends Component {
       console.log('newPostId',newPostId)
       console.log('currPost.id',currPost.id)
       PostsAPI.getPostById(newPostId).then((post) => {
-        console.log('gotpost', post);
         _changeCurrPost({post});
-
-        getCommentsForPost(post).then((comments) => {
-          console.log('comments', comments);
-          _initComments({comments});
-        });
+        _initComments(post);
       });
     } else {
-      getCommentsForPost(currPost).then((comments) => {
-        console.log('comments', comments);
-        _initComments({comments});
-      });
+      _initComments(currPost);
     }
   }
 
