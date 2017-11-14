@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Route, withRouter} from 'react-router-dom';
+import {Route, Switch, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {initPosts, initCategories} from '../actions';
 import '../App.css';
@@ -7,7 +7,6 @@ import CategoriesList from './CategoriesList.js';
 import PostsList from './PostsList.js';
 import PostDetails from './PostDetails.js';
 import PostEdit from './PostEdit.js';
-import * as PostsAPI from '../utils/api.js';
 
 class App extends Component {
   componentDidMount() {
@@ -22,21 +21,27 @@ class App extends Component {
           <h1 className="App-title">Welcome to Readable!</h1>
         </header>
         <CategoriesList/>
-        <Route exact path="/" render={() => (
-          <PostsList newCategory={''}/>
-        )}/>
-        <Route path="/category/:category" render={({match}) => (
-          <PostsList newCategory={match.params.category}/>
-        )}/>
-        <Route path="/post/:postid" render={({match}) => (
-          <PostDetails newPostId={match.params.postid}/>
-        )}/>
-        <Route path="/edit/:postid" render={({match}) => (
-          <PostEdit newPostId={match.params.postid}/>
-        )}/>
-        <Route path="/new_post" render={({match}) => (
-          <PostEdit newPostId=''/>
-        )}/>
+        <Switch>
+          <Route exact path="/" render={() => (
+            <PostsList newCategory={''}/>
+          )}/>
+          <Route path="/category/:category" render={({match}) => (
+            <PostsList newCategory={match.params.category}/>
+          )}/>
+          <Route path="/edit/:postid" render={({match}) => (
+            <PostEdit newPostId={match.params.postid}/>
+          )}/>
+          <Route exact path="/new_post" render={({match}) => (
+            <PostEdit newPostId=''/>
+          )}/>
+          <Route exact path="/error" render={() => (
+            <div>ERROR</div>
+          )}/>
+          <Route path="/:category/:postid" render={({match}) => (
+            <PostDetails newCategory={match.params.category}
+                         newPostId={match.params.postid}/>
+          )}/>
+        </Switch>
       </div>
     );
   }

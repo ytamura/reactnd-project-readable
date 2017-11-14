@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import uuid from 'uuid';
-import {getCommentsForPost} from '../utils/api.js';
 import {initComments, changeCurrPost,
         updatePost, createPost} from '../actions';
-import {Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import PostHeader from './PostHeader.js';
 import * as PostsAPI from '../utils/api.js';
 
@@ -18,7 +17,7 @@ class PostEdit extends Component {
   }
 
   componentDidMount() {
-    const {newPostId, currPost, _changeCurrPost, _initComments} = this.props;
+    const {newPostId, currPost, _changeCurrPost} = this.props;
 
     if (newPostId !== '') {
       if (newPostId !== currPost.id) {
@@ -76,7 +75,7 @@ class PostEdit extends Component {
     }
 
     const {newPostId, currPost, _createPost, _updatePost,
-           _changeCurrPost, history} = this.props;
+           history} = this.props;
 
     let newPost = ((newPostId === '') ? {} : Object.assign({}, currPost));
     newPost.author = postAuthor.trim();
@@ -91,12 +90,12 @@ class PostEdit extends Component {
       _updatePost(newPost);
     }
 
-    history.push('/post/' + submitId);
+    history.push('/' + postCategory + '/' + submitId);
   }
 
   render() {
     const {postAuthor, postTitle, postBody, postCategory, error} = this.state;
-    const {newPostId, currPost, comments, categories} = this.props;
+    const {newPostId, currPost, categories} = this.props;
     console.log('test', currPost)
 
     let submitId = uuid.v1();
@@ -187,12 +186,10 @@ class PostEdit extends Component {
   }
 }
 
-function mapStateToProps({categories, posts, currPost, comments}) {
+function mapStateToProps({categories, currPost}) {
   return {
     categories: categories,
-    posts: posts,
     currPost: currPost,
-    comments: comments,
   }
 }
 

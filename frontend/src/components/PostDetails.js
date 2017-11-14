@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getCommentsForPost} from '../utils/api.js';
 import {initPosts, initComments, changeCurrCategory, changeCurrPost} from '../actions';
 import {Link, withRouter} from 'react-router-dom';
 import sortBy from 'sort-by';
@@ -11,13 +10,17 @@ import * as PostsAPI from '../utils/api.js';
 class PostDetails extends Component {
 
   componentDidMount() {
-    const {newPostId, currPost, _changeCurrPost, _initComments} = this.props;
+    const {history, newPostId, newCategory, currPost, _changeCurrPost,
+           _initComments} = this.props;
 
     if (newPostId !== currPost.id) {
       //In case visited directly via URL
       console.log('newPostId',newPostId)
       console.log('currPost.id',currPost.id)
       PostsAPI.getPostById(newPostId).then((post) => {
+        if (post.category !== newCategory) {
+          history.push('/error');
+        }
         _changeCurrPost({post});
         _initComments(post);
       });
@@ -62,9 +65,8 @@ class PostDetails extends Component {
   }
 }
 
-function mapStateToProps({posts, currPost, comments}) {
+function mapStateToProps({currPost, comments}) {
   return {
-    posts: posts,
     currPost: currPost,
     comments: comments,
   }

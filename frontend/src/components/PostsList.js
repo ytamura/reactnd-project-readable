@@ -15,7 +15,7 @@ class PostsList extends Component {
     const {currCategory, newCategory, _changeCurrCategory} = this.props;
 
     // Only need to dispatch when accessed directly with /:category
-    if(currCategory !== newCategory) {
+    if (currCategory !== newCategory) {
       _changeCurrCategory(newCategory);
     }
   }

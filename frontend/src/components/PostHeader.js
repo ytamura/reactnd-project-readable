@@ -31,7 +31,7 @@ class PostHeader extends Component {
           [{post.author}] {post.title}</h4>
         {post.deleted ? ''
          : <span>
-            <Link to={"/post/" + post.id}
+            <Link to={"/" + post.category + "/" + post.id}
                 className="button"
                 onClick={() => _changeCurrPost({post})}>
               comments({post.commentCount})</Link>

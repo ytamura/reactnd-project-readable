@@ -38,7 +38,7 @@
 .post-list-item {
   background-color: #DDD;
   padding: 5px 10px 5px 10px;
-  margin: 10px 0 10px 0;
+  margin: 12px 0 12px 0;
 }
 
 .post-list-item:hover {
@@ -82,14 +82,15 @@
 
 .submit-button {
   background-color: #9900FF;
-  color: #EEE;
+  color: #FFF;
   border-radius: 2px;
   padding: 5px;
   margin: 10px 0px 10px 0px;
 }
 
 .submit-button:hover {
-  background-color: #555;
+  background-color: #BB00FF;
+  color: #FFF;
 }
 
 .error {

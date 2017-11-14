@@ -54,6 +54,7 @@ function posts(state = [], action) {
           voteScore: 1,
           collapsed: true,
           deleted: false,
+          commentCount: 0,
         }
       ]
     case UPDATE_POST:
@@ -95,7 +96,7 @@ function posts(state = [], action) {
       });
     case CREATE_COMMENT:
       return state.map((post) => {
-        if (post.id == action.comment.parentId) {
+        if (post.id === action.comment.parentId) {
           return {
             ...post,
             commentCount: post.commentCount + 1
@@ -105,7 +106,7 @@ function posts(state = [], action) {
       })
     case DELETE_COMMENT:
       return state.map((post) => {
-        if (post.id == action.comment.parentId) {
+        if (post.id === action.comment.parentId) {
           return {
             ...post,
             commentCount: post.commentCount - 1
@@ -128,6 +129,7 @@ function currPost(state = {}, action) {
         voteScore: 1,
         deleted: false,
         collapsed: true,
+        commentCount: 0,
       };
     case UPDATE_POST:
       return action.post
