@@ -33,7 +33,8 @@ class PostHeader extends Component {
          : <span>
             <Link to={"/post/" + post.id}
                 className="button"
-                onClick={() => _changeCurrPost({post})}>comments</Link>
+                onClick={() => _changeCurrPost({post})}>
+              comments({post.commentCount})</Link>
             <div className="button float-right"
                  title="delete post"
                  onClick={() => _deletePost(post)}>x</div>

@@ -85,7 +85,7 @@ function posts(state = [], action) {
       });
     case DOWNVOTE_POST:
       return state.map((post) => {
-        if(post.id === action.post.id) {
+        if (post.id === action.post.id) {
           return {
             ...post,
             voteScore: post.voteScore - 1
@@ -93,6 +93,26 @@ function posts(state = [], action) {
         }
         return post;
       });
+    case CREATE_COMMENT:
+      return state.map((post) => {
+        if (post.id == action.comment.parentId) {
+          return {
+            ...post,
+            commentCount: post.commentCount + 1
+          }
+        }
+        return post;
+      })
+    case DELETE_COMMENT:
+      return state.map((post) => {
+        if (post.id == action.comment.parentId) {
+          return {
+            ...post,
+            commentCount: post.commentCount - 1
+          }
+        }
+        return post;
+      })
     default:
       return state;
   }
@@ -125,6 +145,16 @@ function currPost(state = {}, action) {
       return {
         ...state,
         deleted: true
+      }
+    case CREATE_COMMENT:
+      return {
+        ...state,
+        commentCount: state.commentCount + 1
+      }
+    case DELETE_COMMENT:
+      return {
+        ...state,
+        commentCount: state.commentCount - 1
       }
     default:
       return state;
