@@ -48,7 +48,7 @@ class PostDetails extends Component {
                         onClick={() => _changeCurrCategory(currPost.category)}>
                     {currPost.category}
                   </Link>
-                , Comments ({commentsToShow.length}):
+                , Comments:
                 </div>
                 {commentsToShow.map((comment) =>
                   <Comment key={comment.id} comment={comment}/>
