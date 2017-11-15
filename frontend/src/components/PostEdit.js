@@ -24,13 +24,17 @@ class PostEdit extends Component {
         //In case visited directly via URL
         PostsAPI.getPostById(newPostId).then((post) => {
           _changeCurrPost({post});
+          this.updateAuthor(post.author);
+          this.updateTitle(post.title);
+          this.updateBody(post.body);
+          this.updateCategory(post.category);
         });
+      } else {
+        this.updateAuthor(currPost.author);
+        this.updateTitle(currPost.title);
+        this.updateBody(currPost.body);
+        this.updateCategory(currPost.category);
       }
-
-      this.updateAuthor(currPost.author);
-      this.updateTitle(currPost.title);
-      this.updateBody(currPost.body);
-      this.updateCategory(currPost.category);
     }
   }
 

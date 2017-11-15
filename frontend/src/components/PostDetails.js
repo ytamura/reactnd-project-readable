@@ -43,7 +43,7 @@ class PostDetails extends Component {
              : <div>
                 <p>[{(new Date(currPost.timestamp)).toLocaleString()}] {currPost.body}</p>
                 <div>Category:
-                  <Link to={"/category/" + currPost.category}
+                  <Link to={"/" + currPost.category}
                         className="category-link"
                         onClick={() => _changeCurrCategory(currPost.category)}>
                     {currPost.category}

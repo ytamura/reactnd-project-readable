@@ -25,8 +25,8 @@ class App extends Component {
           <Route exact path="/" render={() => (
             <PostsList newCategory={''}/>
           )}/>
-          <Route path="/category/:category" render={({match}) => (
-            <PostsList newCategory={match.params.category}/>
+          <Route exact path="/error" render={() => (
+            <div>ERROR</div>
           )}/>
           <Route path="/edit/:postid" render={({match}) => (
             <PostEdit newPostId={match.params.postid}/>
@@ -34,12 +34,12 @@ class App extends Component {
           <Route exact path="/new_post" render={({match}) => (
             <PostEdit newPostId=''/>
           )}/>
-          <Route exact path="/error" render={() => (
-            <div>ERROR</div>
-          )}/>
           <Route path="/:category/:postid" render={({match}) => (
             <PostDetails newCategory={match.params.category}
                          newPostId={match.params.postid}/>
+          )}/>
+          <Route path="/:category" render={({match}) => (
+            <PostsList newCategory={match.params.category}/>
           )}/>
         </Switch>
       </div>
