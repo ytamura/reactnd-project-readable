@@ -31,8 +31,7 @@ class PostsList extends Component {
       let order = (this.state.sortPostsBy[0] === '-' ? '' : '-');
       newOrder = order + field;
     }
-    
-    console.log('newOrder', newOrder);
+
     this.setState({sortPostsBy: newOrder});
   }
 

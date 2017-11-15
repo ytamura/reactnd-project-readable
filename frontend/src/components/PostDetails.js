@@ -15,8 +15,6 @@ class PostDetails extends Component {
 
     if (newPostId !== currPost.id) {
       //In case visited directly via URL
-      console.log('newPostId',newPostId)
-      console.log('currPost.id',currPost.id)
       PostsAPI.getPostById(newPostId).then((post) => {
         if (post.category !== newCategory) {
           history.push('/error');

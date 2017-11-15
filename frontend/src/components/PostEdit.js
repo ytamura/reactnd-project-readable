@@ -22,10 +22,7 @@ class PostEdit extends Component {
     if (newPostId !== '') {
       if (newPostId !== currPost.id) {
         //In case visited directly via URL
-        console.log('newPostId', newPostId)
-        console.log('currPost.id', currPost.id)
         PostsAPI.getPostById(newPostId).then((post) => {
-          console.log('gotpost', post);
           _changeCurrPost({post});
         });
       }
@@ -67,7 +64,6 @@ class PostEdit extends Component {
 
   submitPost = (submitId) => {
     const {postAuthor, postTitle, postBody, postCategory} = this.state;
-    console.log('state',this.state)
     if (postAuthor.trim().length === 0 || postTitle.trim().length === 0 ||
         postBody.trim().length === 0 || postCategory.trim().length === 0) {
       this.setState({error: 'error: all fields required'});
@@ -96,7 +92,6 @@ class PostEdit extends Component {
   render() {
     const {postAuthor, postTitle, postBody, postCategory, error} = this.state;
     const {newPostId, currPost, categories} = this.props;
-    console.log('test', currPost)
 
     let submitId = uuid.v1();
     if (newPostId !== '') {
